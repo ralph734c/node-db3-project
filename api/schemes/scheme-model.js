@@ -96,7 +96,7 @@ async function findById(scheme_id) {
     .leftJoin('steps as st', 'sc.scheme_id', 'st.scheme_id')
     .where('sc.scheme_id', scheme_id)
     .select('st.*', 'sc.scheme_name', 'sc.scheme_id')
-    .orderBy('st.step_number');
+    .orderBy('st.step_number')
   const result = {
     scheme_id: rows[0].scheme_id,
     scheme_name: rows[0].scheme_name,
@@ -142,7 +142,8 @@ async function findSteps(scheme_id) {
     .where('sc.scheme_id', scheme_id)
     .select('st.step_id', 'st.step_number', 'st.instructions', 'sc.scheme_name')
     .orderBy('st.step_number');
-    
+  
+  if (!rows[0].step_id) return []
   return rows
 }
 
